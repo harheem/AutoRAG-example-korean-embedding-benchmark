@@ -4,7 +4,6 @@ import autorag
 import click
 from autorag.evaluator import Evaluator
 from dotenv import load_dotenv
-from llama_index.embeddings.cohere import CohereEmbedding
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.embeddings.upstage import UpstageEmbedding
 from llama_index.embeddings.bedrock import BedrockEmbedding
@@ -36,59 +35,59 @@ data_path = os.path.join(root_path, "data")
 )
 def main(config, qa_data_path, corpus_data_path, project_dir):
     load_dotenv()
-    autorag.embedding_models["ko-sroberta-multitask"] = autorag.LazyInit(
-        HuggingFaceEmbedding, model_name="jhgan/ko-sroberta-multitask"
-    )
     autorag.embedding_models["bedrock_embed"] = autorag.LazyInit(
         BedrockEmbedding, model_name="amazon.titan-embed-text-v2:0"
     )
+    autorag.embedding_models["upstage_embed"] = autorag.LazyInit(UpstageEmbedding)
     autorag.embedding_models["cohere_embed"] = autorag.LazyInit(
         BedrockEmbedding, model_name="cohere.embed-multilingual-v3"
     )
-    # autorag.embedding_models["KoSimCSE-roberta"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="BM-K/KoSimCSE-roberta"
-    # )
-    # autorag.embedding_models["paraphrase-multilingual-mpnet-base-v2"] = (
-    #     autorag.LazyInit(
-    #         HuggingFaceEmbedding,
-    #         model_name="sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
-    #     )
-    # )
-    # autorag.embedding_models["paraphrase-multilingual-MiniLM-L12-v2"] = (
-    #     autorag.LazyInit(
-    #         HuggingFaceEmbedding,
-    #         model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-    #     )
-    # )
-    # autorag.embedding_models["multilingual-e5-large-instruct"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="intfloat/multilingual-e5-large-instruct"
-    # )
-    # autorag.embedding_models["upstage_embed"] = autorag.LazyInit(UpstageEmbedding)
+    autorag.embedding_models["ko-sroberta-multitask"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="jhgan/ko-sroberta-multitask"
+    )
+    autorag.embedding_models["KoSimCSE-roberta"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="BM-K/KoSimCSE-roberta"
+    )
+    autorag.embedding_models["paraphrase-multilingual-mpnet-base-v2"] = (
+        autorag.LazyInit(
+            HuggingFaceEmbedding,
+            model_name="sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+        )
+    )
+    autorag.embedding_models["paraphrase-multilingual-MiniLM-L12-v2"] = (
+        autorag.LazyInit(
+            HuggingFaceEmbedding,
+            model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        )
+    )
+    autorag.embedding_models["multilingual-e5-large-instruct"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="intfloat/multilingual-e5-large-instruct"
+    )
     # autorag.embedding_models["cohere_embed"] = autorag.LazyInit(
     #     CohereEmbedding,
     #     model_name="embed-multilingual-v3.0",
     #     api_key=os.getenv("COHERE_API_KEY"),
     # )
-    # autorag.embedding_models["KU-HIAI-ONTHEIT-large-v2.1"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="KU-HIAI-ONTHEIT/ontheit-large-v1_1"
-    # )
-    # autorag.embedding_models["KU-HIAI-ONTHEIT-large-v2"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="KU-HIAI-ONTHEIT/ontheit-large-v2"
-    # )
-    # autorag.embedding_models["kf-deberta-multitask"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="upskyy/kf-deberta-multitask"
-    # )
-    # autorag.embedding_models["gte-multilingual-base"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding,
-    #     model_name="Alibaba-NLP/gte-multilingual-base",
-    #     trust_remote_code=True,
-    # )
-    # autorag.embedding_models["bge-m3"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="BAAI/bge-m3", trust_remote_code=True
-    # )
-    # autorag.embedding_models["KoE5"] = autorag.LazyInit(
-    #     HuggingFaceEmbedding, model_name="nlpai-lab/KoE5", trust_remote_code=True
-    # )
+    autorag.embedding_models["KU-HIAI-ONTHEIT-large-v2.1"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="KU-HIAI-ONTHEIT/ontheit-large-v1_1"
+    )
+    autorag.embedding_models["KU-HIAI-ONTHEIT-large-v2"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="KU-HIAI-ONTHEIT/ontheit-large-v2"
+    )
+    autorag.embedding_models["kf-deberta-multitask"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="upskyy/kf-deberta-multitask"
+    )
+    autorag.embedding_models["gte-multilingual-base"] = autorag.LazyInit(
+        HuggingFaceEmbedding,
+        model_name="Alibaba-NLP/gte-multilingual-base",
+        trust_remote_code=True,
+    )
+    autorag.embedding_models["bge-m3"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="BAAI/bge-m3", trust_remote_code=True
+    )
+    autorag.embedding_models["KoE5"] = autorag.LazyInit(
+        HuggingFaceEmbedding, model_name="nlpai-lab/KoE5", trust_remote_code=True
+    )
 
     if not os.path.exists(project_dir):
         os.makedirs(project_dir)
